@@ -22,14 +22,16 @@ const Cards = () => {
   }, []);
 
   const handlePrev = () => {
-    setCardNum(cardNum - 1);
-    setCard(cards[cardNum]);
+    const newCardNum = cardNum - 1;
+    setCardNum(newCardNum);
+    setCard(cards[newCardNum]);
     setShowBack(false);
   };
 
   const handleNext = () => {
-    setCardNum(cardNum + 1);
-    setCard(cards[cardNum]);
+    const newCardNum = cardNum + 1;
+    setCardNum(newCardNum);
+    setCard(cards[newCardNum]);
     setShowBack(false);
   };
 
