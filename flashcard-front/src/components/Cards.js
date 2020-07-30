@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import Badge from "react-bootstrap/Badge";
 
 const Cards = () => {
   const [cards, setCards] = useState([]);
-  const [card, setCard] = useState({ cardFront: "", cardBack: "" });
+  const [card, setCard] = useState({ cardFront: "", cardBack: "", tags: [] });
   const [cardNum, setCardNum] = useState(0);
   const [showBack, setShowBack] = useState(false);
 
@@ -43,9 +44,17 @@ const Cards = () => {
     setShowBack(false);
   };
 
+  const tags = card.tags.map((tag) => (
+    <Badge className="tag" variant="info">
+      {tag}
+    </Badge>
+  ));
+
   return (
     <div>
+      <div className="tag-container">{tags}</div>
       <div className="view-card-components">
+        <br />
         <Button variant="primary" disabled={cardNum < 1} onClick={handlePrev}>
           Prev
         </Button>
