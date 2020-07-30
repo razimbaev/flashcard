@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 const CreateCardForm = () => {
   const [card, setCard] = useState({ front: "", back: "" });
@@ -27,38 +29,37 @@ const CreateCardForm = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="front">
-          Card Front:
-          <input
+    <div className="side-padding">
+      <br />
+      <h3 className="text-center">Create New Index Card</h3>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="formFront">
+          <Form.Label>Front</Form.Label>
+          <Form.Control
             type="text"
-            id="front"
+            placeholder="e.g. One"
             name="front"
             value={card.front}
             onChange={handleChange}
-          ></input>
-        </label>
+          />
+        </Form.Group>
         <br />
-        <br />
-        <label htmlFor="back">
-          Card Back:
-          <textarea
-            id="back"
+        <Form.Group controlId="formBack">
+          <Form.Label>Back</Form.Label>
+          <Form.Control
+            as="textarea"
+            type="text"
+            placeholder="e.g. <h1>Uno</h1>"
             name="back"
-            rows="10"
-            cols="100"
             value={card.back}
             onChange={handleChange}
-          ></textarea>
-        </label>
+          />
+        </Form.Group>
         <br />
-        <br />
-        <button type="submit">Submit</button>
-      </form>
-      <br />
-      <br />
-      Card Back Displayed Below (in case of html):
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </Form>
       <br />
       <div dangerouslySetInnerHTML={{ __html: card.back }} />
     </div>

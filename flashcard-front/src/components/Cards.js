@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 
 const Cards = () => {
   const [cards, setCards] = useState([]);
@@ -41,25 +43,41 @@ const Cards = () => {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <button disabled={cardNum < 1} onClick={handlePrev}>
+      <div className="view-card-components">
+        <Button variant="primary" disabled={cardNum < 1} onClick={handlePrev}>
           Prev
-        </button>
-        {card.cardFront}
-        <button disabled={cardNum > cards.length - 2} onClick={handleNext}>
+        </Button>
+        <h1 className="side-padding">{card.cardFront}</h1>
+        <Button
+          variant="primary"
+          disabled={cardNum > cards.length - 2}
+          onClick={handleNext}
+        >
           Next
-        </button>
+        </Button>
       </div>
       <br />
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        {!showBack && <button onClick={handleShowBack}>Show Back</button>}
-        {showBack && <button onClick={handleHideBack}>Hide Back</button>}
+      <div className="view-card-components">
+        {!showBack && (
+          <Button variant="secondary" onClick={handleShowBack}>
+            Show Back
+          </Button>
+        )}
+        {showBack && (
+          <Button variant="secondary" onClick={handleHideBack}>
+            Hide Back
+          </Button>
+        )}
       </div>
 
       <br />
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div className="view-card-components">
         {showBack && (
-          <div dangerouslySetInnerHTML={{ __html: card.cardBack }} />
+          <Card style={{ width: "18rem" }}>
+            <Card.Body>
+              <div dangerouslySetInnerHTML={{ __html: card.cardBack }} />
+            </Card.Body>
+          </Card>
         )}
       </div>
     </div>
