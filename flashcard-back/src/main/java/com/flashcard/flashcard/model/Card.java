@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity @Getter @Setter @ToString
 @Table(name = "flashcard")
@@ -18,4 +19,9 @@ public class Card {
     private long flashcardId;
     private String cardFront;
     private String cardBack;
+
+    @ElementCollection
+    @CollectionTable(name = "tags", joinColumns = {@JoinColumn(name = "flashcard_id")})
+    @Column(name = "tag_name")
+    private Set<String> tags;
 }

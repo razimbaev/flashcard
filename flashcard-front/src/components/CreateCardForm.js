@@ -2,13 +2,19 @@ import React, { useState } from "react";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import TagsInput from "react-tagsinput";
 
 const CreateCardForm = () => {
   const [card, setCard] = useState({ front: "", back: "" });
+  const [tags, setTags] = useState([]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setCard({ ...card, [name]: value });
+  };
+
+  const handleTags = (newTags) => {
+    setTags(newTags);
   };
 
   const handleSubmit = (event) => {
@@ -17,6 +23,7 @@ const CreateCardForm = () => {
         .post("http://localhost:8080/api/v1/card", {
           cardFront: card.front,
           cardBack: card.back,
+          tags,
         })
         .then((result) => {
           alert(JSON.stringify(result));
@@ -53,6 +60,18 @@ const CreateCardForm = () => {
             name="back"
             value={card.back}
             onChange={handleChange}
+          />
+        </Form.Group>
+        <br />
+        <Form.Group controlId="formTags">
+          <Form.Label>Tags</Form.Label>
+          <Form.Control
+            as={TagsInput}
+            type="text"
+            placeholder="some tag"
+            name="tags"
+            value={tags}
+            onChange={handleTags}
           />
         </Form.Group>
         <br />
