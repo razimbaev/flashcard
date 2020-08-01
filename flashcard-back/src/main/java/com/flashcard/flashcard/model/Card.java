@@ -11,7 +11,6 @@ import java.util.Set;
 @Entity @Getter @Setter @ToString
 @Table(name = "flashcard")
 public class Card {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "serial")
@@ -20,8 +19,11 @@ public class Card {
     private String cardFront;
     private String cardBack;
 
-    @ElementCollection
-    @CollectionTable(name = "tags", joinColumns = {@JoinColumn(name = "flashcard_id")})
-    @Column(name = "tag_name")
-    private Set<String> tags;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "flashcard_tag",
+            joinColumns = @JoinColumn(name = "flashcard_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_name")
+    )
+    private Set<Tag> tags;
 }

@@ -3,18 +3,22 @@ import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Badge from "react-bootstrap/Badge";
+import ViewCardSettingsModal from "./ViewCardSettingsModal";
 
 const Cards = () => {
-  const [cards, setCards] = useState([]);
+  const [allCards, setAllCards] = useState([]);
+  const [filteredCards, setFilteredCards] = useState([]);
   const [card, setCard] = useState({ cardFront: "", cardBack: "", tags: [] });
   const [cardNum, setCardNum] = useState(0);
   const [showBack, setShowBack] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/v1/card")
       .then((result) => {
-        setCards(result.data);
+        setAllCards(result.data);
+        setFilteredCards(result.data);
         if (result.data.length > 0) setCard(result.data[0]);
       })
       .catch((error) => {
@@ -25,14 +29,14 @@ const Cards = () => {
   const handlePrev = () => {
     const newCardNum = cardNum - 1;
     setCardNum(newCardNum);
-    setCard(cards[newCardNum]);
+    setCard(filteredCards[newCardNum]);
     setShowBack(false);
   };
 
   const handleNext = () => {
     const newCardNum = cardNum + 1;
     setCardNum(newCardNum);
-    setCard(cards[newCardNum]);
+    setCard(filteredCards[newCardNum]);
     setShowBack(false);
   };
 
@@ -44,24 +48,69 @@ const Cards = () => {
     setShowBack(false);
   };
 
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleFiltering = (newFilters) => {
+    if (newFilters && newFilters.length < 1) {
+      setFilteredCards(allCards);
+      setCard(allCards[0]);
+    } else {
+      newFilters = newFilters.map((filter) => filter.value);
+      const newFilteredCards = allCards.filter((card) => {
+        for (const tag of card.tags) {
+          if (newFilters.includes(tag.tagName)) return true;
+        }
+        return false;
+      });
+      setFilteredCards(newFilteredCards);
+      setCard(newFilteredCards[0]);
+    }
+    setCardNum(0);
+  };
+
   const tags = card.tags.map((tag) => (
-    <Badge className="tag" variant="info">
-      {tag}
+    <Badge id={tag.tagName} className="tag" variant="info">
+      {tag.tagName}
     </Badge>
   ));
 
   return (
     <div>
+      <Button
+        className="filter-button-placement"
+        variant="primary"
+        onClick={handleOpenModal}
+      >
+        Filters
+      </Button>
+      {
+        <ViewCardSettingsModal
+          show={showModal}
+          handleClose={handleCloseModal}
+          setFilters={handleFiltering}
+        />
+      }
+      <br />
       <div className="tag-container">{tags}</div>
       <div className="view-card-components">
         <br />
-        <Button variant="primary" disabled={cardNum < 1} onClick={handlePrev}>
+        <Button
+          variant="outline-primary"
+          disabled={cardNum < 1}
+          onClick={handlePrev}
+        >
           Prev
         </Button>
         <h1 className="side-padding">{card.cardFront}</h1>
         <Button
-          variant="primary"
-          disabled={cardNum > cards.length - 2}
+          variant="outline-primary"
+          disabled={cardNum > filteredCards.length - 2}
           onClick={handleNext}
         >
           Next
@@ -70,12 +119,12 @@ const Cards = () => {
       <br />
       <div className="view-card-components">
         {!showBack && (
-          <Button variant="secondary" onClick={handleShowBack}>
+          <Button variant="outline-secondary" onClick={handleShowBack}>
             Show Back
           </Button>
         )}
         {showBack && (
-          <Button variant="secondary" onClick={handleHideBack}>
+          <Button variant="outline-secondary" onClick={handleHideBack}>
             Hide Back
           </Button>
         )}

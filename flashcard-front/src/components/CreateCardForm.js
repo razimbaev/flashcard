@@ -19,11 +19,15 @@ const CreateCardForm = () => {
 
   const handleSubmit = (event) => {
     if (card.front && card.back) {
+      const tagNames = tags.map((tagName) => {
+        return { tagName };
+      });
+
       axios
         .post("http://localhost:8080/api/v1/card", {
           cardFront: card.front,
           cardBack: card.back,
-          tags,
+          tags: tagNames,
         })
         .then((result) => {
           alert(JSON.stringify(result));
@@ -72,6 +76,7 @@ const CreateCardForm = () => {
             name="tags"
             value={tags}
             onChange={handleTags}
+            onlyUnique={true}
           />
         </Form.Group>
         <br />

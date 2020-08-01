@@ -20,7 +20,7 @@ const Header = () => {
         </Nav.Link>
         |
         <Nav.Link as={Link} to="/viewcards">
-          View All Cards
+          View Cards
         </Nav.Link>
       </Nav>
     </Navbar>
