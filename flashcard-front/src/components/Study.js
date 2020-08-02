@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Badge from "react-bootstrap/Badge";
-import ViewCardSettingsModal from "./ViewCardSettingsModal";
+import StudySettingsModal from "./StudySettingsModal";
 import * as service from "./service";
 
 const Cards = () => {
@@ -90,7 +90,7 @@ const Cards = () => {
         Filters
       </Button>
       {
-        <ViewCardSettingsModal
+        <StudySettingsModal
           show={showModal}
           handleClose={handleCloseModal}
           setFilters={handleFiltering}

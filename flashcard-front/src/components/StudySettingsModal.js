@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Select from "react-select";
 import * as service from "./service";
 
-const ViewCardSettingsModal = ({ show, handleClose, setFilters }) => {
+const StudySettingsModal = ({ show, handleClose, setFilters }) => {
   const [deckOptions, setDeckOptions] = useState([]);
   const [filterData, setFilterData] = useState([]);
 
@@ -57,4 +57,4 @@ const ViewCardSettingsModal = ({ show, handleClose, setFilters }) => {
   );
 };
 
-export default ViewCardSettingsModal;
+export default StudySettingsModal;
