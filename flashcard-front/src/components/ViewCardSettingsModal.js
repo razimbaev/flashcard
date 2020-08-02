@@ -1,27 +1,26 @@
 import React, { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import axios from "axios";
 import Select from "react-select";
+import * as service from "./service";
 
 const ViewCardSettingsModal = ({ show, handleClose, setFilters }) => {
-  const [allDecks, setAllDecks] = useState([]);
+  const [deckOptions, setDeckOptions] = useState([]);
   const [filterData, setFilterData] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/v1/deck")
+    service
+      .getAllDecks()
       .then((result) => {
-        setAllDecks(result.data);
+        const allDecks = result.data.map((deck) => {
+          return { value: deck, label: deck };
+        });
+        setDeckOptions(allDecks);
       })
       .catch((error) => {
         alert(JSON.stringify(error));
       });
   }, []);
-
-  const deckOptions = allDecks.map((deck) => {
-    return { value: deck, label: deck };
-  });
 
   const handleChangeFilters = (newFilterData) => {
     setFilterData(newFilterData);
@@ -40,10 +39,8 @@ const ViewCardSettingsModal = ({ show, handleClose, setFilters }) => {
       <Modal.Body>
         <Select
           isMulti
-          name="colors"
+          name="decks"
           options={deckOptions}
-          className="basic-multi-select"
-          classNamePrefix="select"
           value={filterData}
           onChange={handleChangeFilters}
         />

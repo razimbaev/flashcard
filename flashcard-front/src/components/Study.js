@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Badge from "react-bootstrap/Badge";
 import ViewCardSettingsModal from "./ViewCardSettingsModal";
+import * as service from "./service";
 
 const Cards = () => {
   const [allCards, setAllCards] = useState([]);
@@ -14,8 +14,8 @@ const Cards = () => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/v1/card")
+    service
+      .getAllCards()
       .then((result) => {
         setAllCards(result.data);
         setFilteredCards(result.data);
