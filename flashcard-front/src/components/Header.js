@@ -12,15 +12,15 @@ const Header = () => {
       <Nav className="mr-auto">
         |
         <Nav.Link as={Link} to="/">
-          Home
+          Study
         </Nav.Link>
         |
         <Nav.Link as={Link} to="/createcard">
           Create New Card
         </Nav.Link>
         |
-        <Nav.Link as={Link} to="/viewcards">
-          View Cards
+        <Nav.Link as={Link} to="/changedeck">
+          Change Deck
         </Nav.Link>
       </Nav>
     </Navbar>

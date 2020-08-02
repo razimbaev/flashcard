@@ -5,22 +5,22 @@ import axios from "axios";
 import Select from "react-select";
 
 const ViewCardSettingsModal = ({ show, handleClose, setFilters }) => {
-  const [allTags, setAllTags] = useState([]);
+  const [allDecks, setAllDecks] = useState([]);
   const [filterData, setFilterData] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/v1/tag")
+      .get("http://localhost:8080/api/v1/deck")
       .then((result) => {
-        setAllTags(result.data);
+        setAllDecks(result.data);
       })
       .catch((error) => {
         alert(JSON.stringify(error));
       });
   }, []);
 
-  const tagOptions = allTags.map((tag) => {
-    return { value: tag, label: tag };
+  const deckOptions = allDecks.map((deck) => {
+    return { value: deck, label: deck };
   });
 
   const handleChangeFilters = (newFilterData) => {
@@ -41,7 +41,7 @@ const ViewCardSettingsModal = ({ show, handleClose, setFilters }) => {
         <Select
           isMulti
           name="colors"
-          options={tagOptions}
+          options={deckOptions}
           className="basic-multi-select"
           classNamePrefix="select"
           value={filterData}

@@ -28,14 +28,14 @@ code {
   text-align: center;
 }
 
-.tag {
+.deck {
   margin-top: 10px;
   margin-left: 10px;
   margin-right: 10px;
   height: 20px;
 }
 
-.tag-container {
+.deck-container {
   display: flex;
   justify-content: center;
   height: 50px;

@@ -8,17 +8,17 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity @Getter @Setter
-@Table(name = "tag")
-public class Tag {
+@Table(name = "deck")
+public class Deck {
     @Id
-    private String tagName;
+    private String deckName;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "decks")
     @JsonIgnore
     private Set<Card> cards;
 
     @Override
     public String toString() {
-        return this.tagName;
+        return this.deckName;
     }
 }

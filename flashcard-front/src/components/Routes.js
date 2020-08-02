@@ -2,8 +2,8 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Header from "./Header";
 import CreateCardForm from "./CreateCardForm";
-import Cards from "./Cards";
-import Home from "./Home";
+import Study from "./Study";
+import ChangeDeck from "./ChangeDeck";
 
 const Routes = () => {
   return (
@@ -12,9 +12,9 @@ const Routes = () => {
         <Header />
       </div>
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={Study} />
         <Route exact path="/createcard" component={CreateCardForm} />
-        <Route exact path="/viewcards" component={Cards} />
+        <Route exact path="/changedeck" component={ChangeDeck} />
       </Switch>
     </BrowserRouter>
   );

@@ -8,7 +8,7 @@ import ViewCardSettingsModal from "./ViewCardSettingsModal";
 const Cards = () => {
   const [allCards, setAllCards] = useState([]);
   const [filteredCards, setFilteredCards] = useState([]);
-  const [card, setCard] = useState({ cardFront: "", cardBack: "", tags: [] });
+  const [card, setCard] = useState({ cardFront: "", cardBack: "", decks: [] });
   const [cardNum, setCardNum] = useState(0);
   const [showBack, setShowBack] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -63,8 +63,8 @@ const Cards = () => {
     } else {
       newFilters = newFilters.map((filter) => filter.value);
       const newFilteredCards = allCards.filter((card) => {
-        for (const tag of card.tags) {
-          if (newFilters.includes(tag.tagName)) return true;
+        for (const deck of card.decks) {
+          if (newFilters.includes(deck.deckName)) return true;
         }
         return false;
       });
@@ -74,9 +74,9 @@ const Cards = () => {
     setCardNum(0);
   };
 
-  const tags = card.tags.map((tag) => (
-    <Badge id={tag.tagName} className="tag" variant="info">
-      {tag.tagName}
+  const decks = card.decks.map((deck) => (
+    <Badge id={deck.deckName} className="deck" variant="info">
+      {deck.deckName}
     </Badge>
   ));
 
@@ -97,7 +97,7 @@ const Cards = () => {
         />
       }
       <br />
-      <div className="tag-container">{tags}</div>
+      <div className="deck-container">{decks}</div>
       <div className="view-card-components">
         <br />
         <Button

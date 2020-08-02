@@ -1,5 +1,5 @@
-DROP TABLE Flashcard_Tag
-DROP TABLE Tag;
+DROP TABLE Flashcard_Deck;
+DROP TABLE Deck;
 DROP TABLE CardBackContent;
 DROP TABLE Flashcard;
 
@@ -19,20 +19,20 @@ CREATE TABLE CardBackContent(
 			REFERENCES FlashCard(flashcard_id)
 );
 
-CREATE TABLE Tag(
-	tag_name VARCHAR(100) PRIMARY KEY NOT NULL
+CREATE TABLE Deck(
+	deck_name VARCHAR(100) PRIMARY KEY NOT NULL
 );
 
-CREATE TABLE Flashcard_Tag(
+CREATE TABLE Flashcard_Deck(
 	flashcard_id INT,
-	tag_name VARCHAR(100) NOT NULL,
-	PRIMARY KEY(flashcard_id, tag_name),
+	deck_name VARCHAR(100) NOT NULL,
+	PRIMARY KEY(flashcard_id, deck_name),
 	CONSTRAINT flashcard_id_FK
 		FOREIGN KEY(flashcard_id)
 			REFERENCES FlashCard(flashcard_id),
-	CONSTRAINT tag_name_FK
-		FOREIGN KEY(tag_name)
-			REFERENCES Tag(tag_name)
+	CONSTRAINT deck_name_FK
+		FOREIGN KEY(deck_name)
+			REFERENCES Deck(deck_name)
 );
 
 GRANT ALL ON SEQUENCE public.flashcard_flashcard_id_seq TO flashcard_user;
@@ -41,6 +41,6 @@ GRANT ALL ON TABLE public.cardbackcontent TO flashcard_user;
 
 GRANT ALL ON TABLE public.flashcard TO flashcard_user;
 
-GRANT ALL ON TABLE public.tag TO flashcard_user;
+GRANT ALL ON TABLE public.deck TO flashcard_user;
 
-GRANT ALL ON TABLE public.flashcard_tag TO flashcard_user;
+GRANT ALL ON TABLE public.flashcard_deck TO flashcard_user;

@@ -1,32 +1,32 @@
 package com.flashcard.flashcard;
 
 import com.flashcard.flashcard.model.Card;
-import com.flashcard.flashcard.model.Tag;
+import com.flashcard.flashcard.model.Deck;
 import com.flashcard.flashcard.repository.CardRepository;
-import com.flashcard.flashcard.repository.TagRepository;
+import com.flashcard.flashcard.repository.DeckRepository;
 
 import java.util.*;
 
 public class InitTestData {
-    private static Tag even, odd, multiplesOfThree;
+    private static Deck even, odd, multiplesOfThree;
 
     static {
-        even = new Tag();
-        even.setTagName("EVEN");
+        even = new Deck();
+        even.setDeckName("EVEN");
 
-        odd = new Tag();
-        odd.setTagName("ODD");
+        odd = new Deck();
+        odd.setDeckName("ODD");
 
-        multiplesOfThree = new Tag();
-        multiplesOfThree.setTagName("MULTIPLES_OF_THREE");
+        multiplesOfThree = new Deck();
+        multiplesOfThree.setDeckName("MULTIPLES_OF_THREE");
     }
 
-    public static void saveTestData(CardRepository cardRepository, TagRepository tagRepository) {
+    public static void saveTestData(CardRepository cardRepository, DeckRepository deckRepository) {
         List<Card> cards = generateCardsUntil(100);
 
-        tagRepository.save(even);
-        tagRepository.save(odd);
-        tagRepository.save(multiplesOfThree);
+        deckRepository.save(even);
+        deckRepository.save(odd);
+        deckRepository.save(multiplesOfThree);
 
         cardRepository.saveAll(cards);
     }
@@ -43,24 +43,24 @@ public class InitTestData {
             Card card = new Card();
             card.setCardFront(x + "");
             card.setCardBack(getNumAsString(x));
-            card.setTags(getTagsForNum(x));
+            card.setDecks(getDecksForNum(x));
             cards.add(card);
         }
 
         return cards;
     }
 
-    private static Set<Tag> getTagsForNum(int x) {
-        Set<Tag> tags = new HashSet<>();
+    private static Set<Deck> getDecksForNum(int x) {
+        Set<Deck> decks = new HashSet<>();
         if (x % 2 == 0) {
-            tags.add(even);
+            decks.add(even);
         } else {
-            tags.add(odd);
+            decks.add(odd);
         }
 
         if (x % 3 == 0)
-            tags.add(multiplesOfThree);
-        return tags;
+            decks.add(multiplesOfThree);
+        return decks;
     }
 
     private static String getNumAsString(int num) {

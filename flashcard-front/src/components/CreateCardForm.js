@@ -6,28 +6,28 @@ import TagsInput from "react-tagsinput";
 
 const CreateCardForm = () => {
   const [card, setCard] = useState({ front: "", back: "" });
-  const [tags, setTags] = useState([]);
+  const [decks, setDecks] = useState([]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setCard({ ...card, [name]: value });
   };
 
-  const handleTags = (newTags) => {
-    setTags(newTags);
+  const handleDecks = (decksForCard) => {
+    setDecks(decksForCard);
   };
 
   const handleSubmit = (event) => {
     if (card.front && card.back) {
-      const tagNames = tags.map((tagName) => {
-        return { tagName };
+      const deckNames = decks.map((deckName) => {
+        return { deckName };
       });
 
       axios
         .post("http://localhost:8080/api/v1/card", {
           cardFront: card.front,
           cardBack: card.back,
-          tags: tagNames,
+          decks: deckNames,
         })
         .then((result) => {
           alert(JSON.stringify(result));
@@ -67,15 +67,15 @@ const CreateCardForm = () => {
           />
         </Form.Group>
         <br />
-        <Form.Group controlId="formTags">
-          <Form.Label>Tags</Form.Label>
+        <Form.Group controlId="formDeckss">
+          <Form.Label>Decks</Form.Label>
           <Form.Control
             as={TagsInput}
             type="text"
-            placeholder="some tag"
-            name="tags"
-            value={tags}
-            onChange={handleTags}
+            placeholder="Decks that will contain Card"
+            name="decks"
+            value={decks}
+            onChange={handleDecks}
             onlyUnique={true}
           />
         </Form.Group>

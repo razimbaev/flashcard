@@ -2,7 +2,7 @@ package com.flashcard.flashcard.controller;
 
 import com.flashcard.flashcard.model.Card;
 import com.flashcard.flashcard.repository.CardRepository;
-import com.flashcard.flashcard.repository.TagRepository;
+import com.flashcard.flashcard.repository.DeckRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +18,11 @@ public class CardController {
     private CardRepository cardRepository;
 
     @Autowired
-    private TagRepository tagRepository;
+    private DeckRepository deckRepository;
 
     @PostMapping
     public ResponseEntity<Card> createCard(@RequestBody Card card) {
-        tagRepository.saveAll(card.getTags());
+        deckRepository.saveAll(card.getDecks());
         card = cardRepository.save(card);
         return ResponseEntity.ok(card);
     }

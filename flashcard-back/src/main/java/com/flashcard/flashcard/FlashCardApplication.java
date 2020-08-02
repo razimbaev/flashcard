@@ -1,7 +1,7 @@
 package com.flashcard.flashcard;
 
 import com.flashcard.flashcard.repository.CardRepository;
-import com.flashcard.flashcard.repository.TagRepository;
+import com.flashcard.flashcard.repository.DeckRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,10 +28,10 @@ public class FlashCardApplication {
 	}
 
 	@Bean
-	public CommandLineRunner loadData(CardRepository cardRepository, TagRepository tagRepository) {
+	public CommandLineRunner loadData(CardRepository cardRepository, DeckRepository deckRepository) {
 		return (args) -> {
 			if (!cardRepository.findAll().iterator().hasNext())
-				InitTestData.saveTestData(cardRepository, tagRepository);
+				InitTestData.saveTestData(cardRepository, deckRepository);
 		};
 	}
 }

@@ -21,9 +21,9 @@ public class Card {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(
-            name = "flashcard_tag",
+            name = "flashcard_deck",
             joinColumns = @JoinColumn(name = "flashcard_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_name")
+            inverseJoinColumns = @JoinColumn(name = "deck_name")
     )
-    private Set<Tag> tags;
+    private Set<Deck> decks;
 }
