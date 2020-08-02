@@ -1,5 +1,8 @@
 package com.flashcard.flashcard;
 
+import com.flashcard.flashcard.repository.CardRepository;
+import com.flashcard.flashcard.repository.TagRepository;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +24,14 @@ public class FlashCardApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/api/**").allowedOrigins("http://localhost:3000");
 			}
+		};
+	}
+
+	@Bean
+	public CommandLineRunner loadData(CardRepository cardRepository, TagRepository tagRepository) {
+		return (args) -> {
+			if (!cardRepository.findAll().iterator().hasNext())
+				InitTestData.saveTestData(cardRepository, tagRepository);
 		};
 	}
 }
