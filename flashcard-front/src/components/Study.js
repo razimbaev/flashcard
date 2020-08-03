@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
 import Badge from "react-bootstrap/Badge";
 import StudySettingsModal from "./StudySettingsModal";
 import * as service from "./service";
+import Card from "./Card";
 
 const Cards = () => {
   const [allCards, setAllCards] = useState([]);
   const [filteredCards, setFilteredCards] = useState([]);
   const [card, setCard] = useState({ cardFront: "", cardBack: "", decks: [] });
   const [cardNum, setCardNum] = useState(0);
-  const [showBack, setShowBack] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -30,22 +29,12 @@ const Cards = () => {
     const newCardNum = cardNum - 1;
     setCardNum(newCardNum);
     setCard(filteredCards[newCardNum]);
-    setShowBack(false);
   };
 
   const handleNext = () => {
     const newCardNum = cardNum + 1;
     setCardNum(newCardNum);
     setCard(filteredCards[newCardNum]);
-    setShowBack(false);
-  };
-
-  const handleShowBack = () => {
-    setShowBack(true);
-  };
-
-  const handleHideBack = () => {
-    setShowBack(false);
   };
 
   const handleOpenModal = () => {
@@ -89,13 +78,13 @@ const Cards = () => {
       >
         Filters
       </Button>
-      {
-        <StudySettingsModal
-          show={showModal}
-          handleClose={handleCloseModal}
-          setFilters={handleFiltering}
-        />
-      }
+
+      <StudySettingsModal
+        show={showModal}
+        handleClose={handleCloseModal}
+        setFilters={handleFiltering}
+      />
+
       <br />
       <div className="deck-container">{decks}</div>
       <div className="view-card-components">
@@ -104,41 +93,19 @@ const Cards = () => {
           variant="outline-primary"
           disabled={cardNum < 1}
           onClick={handlePrev}
+          className="side-padding"
         >
           Prev
         </Button>
-        <h1 className="side-padding">{card.cardFront}</h1>
+        <Card card={card} />
         <Button
           variant="outline-primary"
           disabled={cardNum > filteredCards.length - 2}
           onClick={handleNext}
+          className="side-padding"
         >
           Next
         </Button>
-      </div>
-      <br />
-      <div className="view-card-components">
-        {!showBack && (
-          <Button variant="outline-secondary" onClick={handleShowBack}>
-            Show Back
-          </Button>
-        )}
-        {showBack && (
-          <Button variant="outline-secondary" onClick={handleHideBack}>
-            Hide Back
-          </Button>
-        )}
-      </div>
-
-      <br />
-      <div className="view-card-components">
-        {showBack && (
-          <Card style={{ width: "18rem" }}>
-            <Card.Body>
-              <div dangerouslySetInnerHTML={{ __html: card.cardBack }} />
-            </Card.Body>
-          </Card>
-        )}
       </div>
     </div>
   );
