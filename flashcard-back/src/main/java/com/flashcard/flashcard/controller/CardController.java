@@ -27,9 +27,21 @@ public class CardController {
         return ResponseEntity.ok(card);
     }
 
+    @PutMapping
+    @RequestMapping("/{cardFront}")
+    public ResponseEntity<Card> updateCard(@PathVariable(value="cardFront") String cardFront, @RequestBody Card updatedCard) {
+        deckRepository.saveAll(updatedCard.getDecks());
+
+        Card beforeUpdate = cardRepository.findByCardFront(cardFront);
+        updatedCard.setFlashcardId(beforeUpdate.getFlashcardId());
+
+        updatedCard = cardRepository.save(updatedCard);
+        return ResponseEntity.ok(updatedCard);
+    }
+
     @GetMapping
     public ResponseEntity<Iterable<Card>> getAllCards() {
-        return ResponseEntity.ok(cardRepository.findAll());
+        return ResponseEntity.ok(cardRepository.findAllOrdered());
     }
 
 }

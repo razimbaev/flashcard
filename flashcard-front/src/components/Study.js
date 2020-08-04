@@ -4,6 +4,7 @@ import Badge from "react-bootstrap/Badge";
 import StudySettingsModal from "./StudySettingsModal";
 import * as service from "./service";
 import Card from "./Card";
+import EditCardModal from "./EditCardModal";
 
 const Cards = () => {
   const [allCards, setAllCards] = useState([]);
@@ -63,11 +64,14 @@ const Cards = () => {
     setCardNum(0);
   };
 
-  const decks = card.decks.map((deck) => (
-    <Badge id={deck.deckName} className="deck" variant="info">
-      {deck.deckName}
-    </Badge>
-  ));
+  const decks =
+    !card && !card.decks
+      ? []
+      : card.decks.map((deck) => (
+          <Badge key={deck.deckName} className="deck" variant="info">
+            {deck.deckName}
+          </Badge>
+        ));
 
   return (
     <div>
@@ -107,6 +111,8 @@ const Cards = () => {
           Next
         </Button>
       </div>
+
+      <EditCardModal originalCard={card} />
     </div>
   );
 };
